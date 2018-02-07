@@ -26,7 +26,7 @@ class Stocker():
         self.symbol = ticker
         
         # Use Personal Api Key
-        # quandl.ApiConfig.api_key = 'YourKeyHere'
+        quandl.ApiConfig.api_key = "sY8rR9LTz4kT5z2cs94v"
 
         # Retrieval the financial data
         try:
