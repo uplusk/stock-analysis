@@ -269,7 +269,7 @@ class Stocker():
             elif plot_type == 'basic':
                 plt.style.use('fivethirtyeight');
                 plt.plot(stock_plot['Date'], stock_plot[stat], color = colors[i], linewidth = 3, label = stat, alpha = 0.8)
-                plt.xlabel('Date'); plt.ylabel('US $'); plt.title('%s Stock History' % self.symbol); 
+                plt.xlabel('Date'); plt.ylabel('INR'); plt.title('%s Stock History' % self.symbol); 
                 plt.legend(prop={'size':10})
                 plt.grid(color = 'k', alpha = 0.4); 
       
@@ -349,13 +349,13 @@ class Stocker():
         
         # Plot the profits over time
         plt.plot(profits['Date'], profits['hold_profit'], 'b', linewidth = 3)
-        plt.ylabel('Profit ($)'); plt.xlabel('Date'); plt.title('Buy and Hold Profits for {} {} to {}'.format(
+        plt.ylabel('Profit (INR)'); plt.xlabel('Date'); plt.title('Buy and Hold Profits for {} {} to {}'.format(
                                                                 self.symbol, start_date.date(), end_date.date()))
         
         # Display final value on graph
         plt.text(x = text_location, 
              y =  total_hold_profit + (total_hold_profit / 40),
-             s = '$%d' % total_hold_profit,
+             s = 'INR%d' % total_hold_profit,
             color = 'g' if total_hold_profit > 0 else 'r',
             size = 14)
         
@@ -430,7 +430,7 @@ class Stocker():
                             
         # Plot labels
         plt.legend(loc = 2, prop={'size': 10})
-        plt.xlabel('Date'); plt.ylabel('Stock Price ($)'); plt.title('Effect of Changepoint Prior Scale');
+        plt.xlabel('Date'); plt.ylabel('Stock Price (INR)'); plt.title('Effect of Changepoint Prior Scale');
         plt.show()
             
     # Basic prophet model for specified number of days  
@@ -454,7 +454,7 @@ class Stocker():
         
         if days > 0:
             # Print the predicted price
-            print('Predicted Price on {} = ${:.2f}'.format(
+            print('Predicted Price on {} = INR{:.2f}'.format(
                 future.ix[len(future) - 1, 'ds'].date(), future.ix[len(future) - 1, 'yhat']))
 
             title = '%s Historical and Predicted Stock Price'  % self.symbol
@@ -475,7 +475,7 @@ class Stocker():
                        facecolor = 'g', edgecolor = 'k', linewidth = 1.4, label = 'Confidence Interval')
 
         # Plot formatting
-        plt.legend(loc = 2, prop={'size': 10}); plt.xlabel('Date'); plt.ylabel('Price $');
+        plt.legend(loc = 2, prop={'size': 10}); plt.xlabel('Date'); plt.ylabel('Price INR');
         plt.grid(linewidth=0.6, alpha = 0.6)
         plt.title(title);
         plt.show()
@@ -548,11 +548,11 @@ class Stocker():
                 end_date.date()))
 
             # Final prediction vs actual value
-            print('\nPredicted price on {} = ${:.2f}.'.format(max(future['ds']).date(), future.ix[len(future) - 1, 'yhat']))
-            print('Actual price on    {} = ${:.2f}.\n'.format(max(test['ds']).date(), test.ix[len(test) - 1, 'y']))
+            print('\nPredicted price on {} = INR{:.2f}.'.format(max(future['ds']).date(), future.ix[len(future) - 1, 'yhat']))
+            print('Actual price on    {} = INR{:.2f}.\n'.format(max(test['ds']).date(), test.ix[len(test) - 1, 'y']))
 
-            print('Average Absolute Error on Training Data = ${:.2f}.'.format(train_mean_error))
-            print('Average Absolute Error on Testing  Data = ${:.2f}.\n'.format(test_mean_error))
+            print('Average Absolute Error on Training Data = INR{:.2f}.'.format(train_mean_error))
+            print('Average Absolute Error on Testing  Data = INR{:.2f}.\n'.format(test_mean_error))
 
             # Direction accuracy
             print('When the model predicted an increase, the price increased {:.2f}% of the time.'.format(increase_accuracy))
@@ -583,7 +583,7 @@ class Stocker():
                        linestyles='dashed', label = 'Prediction Start')
 
             # Plot formatting
-            plt.legend(loc = 2, prop={'size': 8}); plt.xlabel('Date'); plt.ylabel('Price $');
+            plt.legend(loc = 2, prop={'size': 8}); plt.xlabel('Date'); plt.ylabel('Price INR');
             plt.grid(linewidth=0.6, alpha = 0.6)
                        
             plt.title('{} Model Evaluation from {} to {}.'.format(self.symbol,
@@ -628,8 +628,8 @@ class Stocker():
             print('When the model predicted a  decrease, the price decreased  {:.2f}% of the time.\n'.format(decrease_accuracy))
 
             # Display some friendly information about the perils of playing the stock market
-            print('The total profit using the Prophet model = ${:.2f}.'.format(np.sum(prediction_profit)))
-            print('The Buy and Hold strategy profit =         ${:.2f}.'.format(float(test.ix[len(test) - 1, 'hold_profit'])))
+            print('The total profit using the Prophet model = INR{:.2f}.'.format(np.sum(prediction_profit)))
+            print('The Buy and Hold strategy profit =         INR{:.2f}.'.format(float(test.ix[len(test) - 1, 'hold_profit'])))
             print('\nThanks for playing the stock market!\n')
             
            
@@ -659,18 +659,18 @@ class Stocker():
             # Display final values on graph
             plt.text(x = text_location, 
                      y =  final_profit + (final_profit / 40),
-                     s = '$%d' % final_profit,
+                     s = 'INR%d' % final_profit,
                     color = 'g' if final_profit > 0 else 'r',
                     size = 18)
             
             plt.text(x = text_location, 
                      y =  final_smart + (final_smart / 40),
-                     s = '$%d' % final_smart,
+                     s = 'INR%d' % final_smart,
                     color = 'g' if final_smart > 0 else 'r',
                     size = 18);
 
             # Plot formatting
-            plt.ylabel('Profit  (US $)'); plt.xlabel('Date'); 
+            plt.ylabel('Profit  (INR)'); plt.xlabel('Date'); 
             plt.title('Predicted versus Buy and Hold Profits');
             plt.legend(loc = 2, prop={'size': 10});
             plt.grid(alpha=0.2); 
@@ -761,7 +761,7 @@ class Stocker():
                        linewidth= 1.2, label='Positive Changepoints')
 
             plt.legend(prop={'size':10});
-            plt.xlabel('Date'); plt.ylabel('Price ($)'); plt.title('Stock Price with Changepoints')
+            plt.xlabel('Date'); plt.ylabel('Price (INR)'); plt.title('Stock Price with Changepoints')
             plt.show()
         
         # Search for search term in google news
@@ -886,7 +886,7 @@ class Stocker():
         # Plot formatting
         plt.legend(loc = 2, prop={'size': 10});
         plt.xticks(rotation = '45')
-        plt.ylabel('Predicted Stock Price (US $)');
+        plt.ylabel('Predicted Stock Price (INR)');
         plt.xlabel('Date'); plt.title('Predictions for %s' % self.symbol);
         plt.show()
         
@@ -961,7 +961,7 @@ class Stocker():
         
         plt.plot(results['cps'], results['train_err'], 'bo-', ms = 8, label = 'Train Error')
         plt.plot(results['cps'], results['test_err'], 'r*-', ms = 8, label = 'Test Error')
-        plt.xlabel('Changepoint Prior Scale'); plt.ylabel('Avg. Absolute Error ($)');
+        plt.xlabel('Changepoint Prior Scale'); plt.ylabel('Avg. Absolute Error (INR)');
         plt.title('Training and Testing Curves as Function of CPS')
         plt.grid(color='k', alpha=0.3)
         plt.xticks(results['cps'], results['cps'])
@@ -973,7 +973,7 @@ class Stocker():
 
         plt.plot(results['cps'], results['train_range'], 'bo-', ms = 8, label = 'Train Range')
         plt.plot(results['cps'], results['test_range'], 'r*-', ms = 8, label = 'Test Range')
-        plt.xlabel('Changepoint Prior Scale'); plt.ylabel('Avg. Uncertainty ($)');
+        plt.xlabel('Changepoint Prior Scale'); plt.ylabel('Avg. Uncertainty (INR)');
         plt.title('Uncertainty in Estimate as Function of CPS')
         plt.grid(color='k', alpha=0.3)
         plt.xticks(results['cps'], results['cps'])
